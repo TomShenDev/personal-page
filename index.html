@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tom Shen - Web Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    /* Reset */
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: #2d2d2d;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    
+    /* Hero Section */
+    .hero {
+      min-height: 100vh;
+      padding: 120px 20px 60px;
+      background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.6)),
+                  url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-1.2.1&auto=format&fit=crop&w=1952&q=80');
+      background-size: cover;
+      background-position: center;
+      color: white;
+      display: flex;
+      align-items: center;
+    }
+    
+    .hero-content {
+      max-width: 1000px;
+      margin: 0 auto;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 1s ease-out 0.3s forwards;
+    }
+    
+    .hero h1 {
+      font-size: 4.5rem;
+      color: white;
+      margin-bottom: 1.5rem;
+      line-height: 1.1;
+    }
+    
+    .hero p {
+      font-size: 1.8rem;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+    }
+    
+    .hero .description {
+      font-size: 1.2rem;
+      max-width: 800px;
+      margin: 0 auto;
+      opacity: 0.8;
+      line-height: 1.8;
+    }
+    
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    /* Header Navigation */
+    header {
+      position: fixed;
+      width: 100%;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      padding: 1rem 0;
+      transition: all 0.3s ease;
+      background: transparent;
+    }
+    
+    header.scrolled {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+    
+    header nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+    }
+    
+    header nav ul li a {
+      text-decoration: none;
+      color: white;
+      font-weight: 600;
+      position: relative;
+      padding: 0.5rem 0;
+      transition: all 0.3s;
+    }
+    
+    header.scrolled nav ul li a {
+      color: #2d2d2d;
+    }
+    
+    header nav ul li a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: 0;
+      left: 0;
+      background: currentColor;
+      transition: width 0.3s ease-out;
+    }
+    
+    header nav ul li a:hover::after {
+      width: 100%;
+    }
+    
+    /* Main Content Sections */
+    section {
+      padding: 6rem 2rem;
+      background: #ffffff;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    
+    section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      position: relative;
+    }
+    
+    h1 {
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+      color: #2d2d2d;
+    }
+    
+    h2 {
+      font-size: 2.5rem;
+      margin-bottom: 2rem;
+      display: inline-block;
+      color: #3a3a3a;
+    }
+    
+    h2::after {
+      content: '';
+      display: block;
+      margin-top: 5px;
+      width: 60px;
+      height: 4px;
+      background: #3a3a3a;
+      border-radius: 2px;
+    }
+    
+    .experience-item {
+      margin-bottom: 3rem;
+      padding: 2rem;
+      background: #ffffff;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    }
+    
+    .icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 35px;
+      height: 35px;
+      background: #3a3a3a;
+      color: white;
+      border-radius: 8px;
+      margin-right: 1rem;
+      font-weight: 600;
+      box-shadow: 0 4px 6px rgba(58,58,58,0.2);
+    }
+    
+    .tech-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 1rem 0;
+    }
+    
+    .tech-tag {
+      background: rgba(58,58,58,0.1);
+      color: #3a3a3a;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: transform 0.2s;
+    }
+    
+    .tech-tag:hover {
+      transform: translateY(-2px);
+    }
+    
+    .social-links {
+      display: flex;
+      gap: 1.5rem;
+      margin: 1.5rem 0;
+    }
+    
+    .social-link {
+      font-size: 1.5rem;
+      color: #3a3a3a;
+      transition: transform 0.3s, color 0.3s;
+    }
+    
+    .social-link:hover {
+      color: #2d2d2d;
+      transform: translateY(-3px);
+    }
+    
+    a {
+      color: #3a3a3a;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    
+    a:hover {
+      color: #2d2d2d;
+    }
+    
+    /* Professional Summary Styles */
+    .professional-summary {
+      font-size: 1.3rem;
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+    }
+    .professional-summary ol {
+      list-style: decimal inside;
+      margin-left: 1rem;
+    }
+    .professional-summary li {
+      margin-bottom: 1rem;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2.5rem;
+      }
+      
+      h2 {
+        font-size: 2rem;
+      }
+      
+      header nav ul {
+        flex-wrap: wrap;
+        gap: 1rem;
+        padding: 0 1rem;
+      }
+      
+      section {
+        padding: 4rem 1rem;
+      }
+      
+      .experience-item {
+        padding: 1.5rem;
+      }
+    
+      .hero h1 {
+        font-size: 3rem;
+      }
+    
+      .hero p {
+        font-size: 1.5rem;
+      }
+    
+      .hero .description {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Tom Shen</h1>
+      <p>Web Developer &amp; eCommerce Specialist</p>
+      <div class="description">
+        Crafting high-performance web solutions and optimizing eCommerce platforms for businesses worldwide.
+        Passionate about creating seamless user experiences and driving digital growth.
+      </div>
+    </div>
+  </section>
+  
+  <!-- Fixed Header -->
+  <header>
+    <nav>
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+  
+  <!-- Main Content -->
+  <main>
+    <!-- About Section -->
+    <section id="about" class="container">
+      <h2>Professional Summary</h2>
+      <div class="professional-summary">
+        <ol>
+          <li><strong>Marketing eCommerce Developer:</strong> 6+ years in full-stack dev, eCommerce optimization, and customer solutions.</li>
+          <li><strong>High-Conversion Design:</strong> Expert in building websites that boost conversion and user engagement.</li>
+          <li><strong>Multi-Channel Management:</strong> Skilled with Shopify, WordPress, and Amazon, plus content creation using AI, Canva, and Photoshop.</li>
+          <li><strong>Sales &amp; SEO:</strong> Drove <span style="color: #E91E63;"><strong>$50K+</strong></span> in sales through platform upgrades and SEO improvements.</li>
+        </ol>
+      </div>
+      <div class="social-links">
+        <a href="https://linkedin.com/in/tom-shen-s" target="_blank" class="social-link">
+          <i class="fab fa-linkedin"></i>
+        </a>
+        <a href="https://github.com/TomShenDev" target="_blank" class="social-link">
+          <i class="fab fa-github"></i>
+        </a>
+        <a href="mailto:tshin0346@gmail.com" class="social-link">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </div>
+      <p style="margin-bottom: 1rem;">
+        <i class="fas fa-map-marker-alt"></i> Toronto, ON | 
+        <i class="fas fa-phone"></i> (647) 676-8983
+      </p>
+    </section>
+    
+    <!-- Experience Section -->
+    <section id="experience" class="container">
+      <h2>Professional Experience</h2>
+      
+      <div class="experience-item">
+        <h3>
+          <span class="icon">1</span> Web Developer, Valencia Theater Seating, Oakville
+        </h3>
+        <p><strong>Aug 2024 – Feb 2025</strong></p>
+        <div class="tech-tags">
+          <span class="tech-tag">WordPress</span>
+          <span class="tech-tag">Shopify</span>
+          <span class="tech-tag">Amazon</span>
+          <span class="tech-tag">Stripe</span>
+          <span class="tech-tag">Google Ads</span>
+        </div>
+        <ul>
+          <li>Launched 3 eCommerce projects on Shopify and WordPress, generating <strong>$50K</strong> in sales.</li>
+          <li>Created 50+ marketing graphics, videos, and banners with AI, Photoshop, and Canva – boosting click-through by <strong>15%</strong>.</li>
+          <li>Managed Amazon and Shopify channels, streamlining listings, orders, inquiries, tracking, and analysis.</li>
+          <li>Improved post-purchase satisfaction with an automated email follow-up system.</li>
+        </ul>
+      </div>
+      
+      <div class="experience-item">
+        <h3>
+          <span class="icon">2</span> Full Stack Engineer, Canbo Canada, Toronto
+        </h3>
+        <p><strong>Dec 2022 – Jan 2024</strong></p>
+        <div class="tech-tags">
+          <span class="tech-tag">React</span>
+          <span class="tech-tag">Node.js</span>
+          <span class="tech-tag">TypeScript</span>
+          <span class="tech-tag">Figma</span>
+          <span class="tech-tag">MySQL</span>
+        </div>
+        <ul>
+          <li>Revamped eCommerce platforms with React/Node.js, cutting costs by <strong>10%</strong> with a custom solution.</li>
+          <li>Enhanced SEO by refining keywords and integrating interactive UI/UX elements.</li>
+          <li>Collaborated with marketing to design promo templates and landing pages using Figma and Adobe Suite.</li>
+          <li>Optimized Google Shopping via Merchant Center, increasing traffic by <strong>30%</strong>.</li>
+        </ul>
+      </div>
+      
+      <div class="experience-item">
+        <h3>
+          <span class="icon">3</span> Full Stack Developer, IBM, Hong Kong
+        </h3>
+        <p><strong>Jun 2022 – Nov 2022</strong></p>
+        <div class="tech-tags">
+          <span class="tech-tag">AEM</span>
+          <span class="tech-tag">Java</span>
+          <span class="tech-tag">Azure</span>
+          <span class="tech-tag">Docker</span>
+          <span class="tech-tag">REST API</span>
+        </div>
+        <ul>
+          <li>Completed project <strong>30 days early</strong> under high pressure.</li>
+          <li>Achieved <strong>95%</strong> unit tests and <strong>100%</strong> integration tests, finishing all user stories on time.</li>
+          <li>Enhanced site performance by reducing load times, boosting caching, and optimizing scripts.</li>
+          <li>Collaborated with DevOps to ensure cross-browser and device compatibility.</li>
+        </ul>
+      </div>
+    </section>
+    
+    <!-- Projects Section -->
+    <section id="projects" class="container">
+      <h2>Highlighted Side Projects</h2>
+      
+      <div class="experience-item">
+        <h3>
+          <span class="icon">1</span> Realestic.io
+        </h3>
+        <p><strong>Realestic.io</strong> – Simplifies 3D visualization for real estate.</p>
+        <div class="tech-tags">
+          <span class="tech-tag">Swift</span>
+          <span class="tech-tag">Ionic</span>
+          <span class="tech-tag">Three.js</span>
+          <span class="tech-tag">AWS</span>
+          <span class="tech-tag">MongoDB</span>
+        </div>
+      </div>
+      
+      <div class="experience-item">
+        <h3>
+          <span class="icon">2</span> Choose4u.com
+        </h3>
+        <p><strong>Choose4u.com</strong> – Uses AI &amp; NLP for restaurant and food searches.</p>
+        <div class="tech-tags">
+          <span class="tech-tag">Next.js</span>
+          <span class="tech-tag">Llama 3</span>
+          <span class="tech-tag">Flask</span>
+          <span class="tech-tag">TailwindCSS</span>
+          <span class="tech-tag">NLP</span>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Education Section -->
+    <section id="education" class="container">
+      <h2>Education</h2>
+      <div class="experience-item">
+        <h3><span class="icon">🎓</span> Arizona State University</h3>
+        <p><strong>M.S. Computer Science</strong> – Graduation: <strong>Jun 2025</strong></p>
+      </div>
+      <div class="experience-item">
+        <h3><span class="icon">🎓</span> Hong Kong University of Sci &amp; Tech</h3>
+        <p><strong>B.Eng. Computer Engineering</strong> – Graduated: <strong>Jun 2022</strong></p>
+      </div>
+    </section>
+    
+    <!-- Skills Section -->
+    <section id="skills" class="container">
+      <h2>Skills</h2>
+      <div class="experience-item">
+        <h3>eCommerce Platforms</h3>
+        <div class="tech-tags">
+          <span class="tech-tag">Shopify</span>
+          <span class="tech-tag">WordPress</span>
+          <span class="tech-tag">Amazon Marketplace</span>
+          <span class="tech-tag">Google Merchant Center</span>
+        </div>
+        <h3>Design Tools</h3>
+        <div class="tech-tags">
+          <span class="tech-tag">Adobe Photoshop</span>
+          <span class="tech-tag">Canva</span>
+          <span class="tech-tag">Figma</span>
+          <span class="tech-tag">AI Tools</span>
+        </div>
+        <h3>Web Development</h3>
+        <div class="tech-tags">
+          <span class="tech-tag">React</span>
+          <span class="tech-tag">Node.js</span>
+          <span class="tech-tag">REST APIs</span>
+          <span class="tech-tag">Material UI</span>
+          <span class="tech-tag">TailwindCSS</span>
+        </div>
+        <h3>CRM &amp; Analytics</h3>
+        <div class="tech-tags">
+          <span class="tech-tag">Google Ads</span>
+          <span class="tech-tag">Stripe</span>
+          <span class="tech-tag">SEO Tools</span>
+          <span class="tech-tag">Google Analytics</span>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Contact Section -->
+    <section id="contact" class="container">
+      <h2>Contact</h2>
+      <div class="experience-item">
+        <p style="margin-bottom: 1rem;">
+          <i class="fas fa-envelope"></i> <strong>Email:</strong> 
+          <a href="mailto:tshin0346@gmail.com">tshin0346@gmail.com</a>
+        </p>
+        <p style="margin-bottom: 1rem;">
+          <i class="fas fa-phone"></i> <strong>Phone:</strong> (647) 676-8983
+        </p>
+        <div class="social-links">
+          <a href="https://linkedin.com/in/tom-shen-s" target="_blank" class="social-link">
+            <i class="fab fa-linkedin"></i> LinkedIn
+          </a>
+          <a href="https://github.com/TomShenDev" target="_blank" class="social-link">
+            <i class="fab fa-github"></i> GitHub
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+  
+  <script>
+    // Header Scroll Effect
+    window.addEventListener('scroll', () => {
+      const header = document.querySelector('header');
+      const heroHeight = document.querySelector('.hero').offsetHeight;
+      if (window.scrollY > heroHeight * 0.8) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+    
+    // Intersection Observer for Sections and Experience Items
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          if (entry.target.classList.contains('experience-item')) {
+            entry.target.style.transitionDelay = `${entry.target.dataset.delay || 0}ms`;
+          }
+        }
+      });
+    }, { threshold: 0.1 });
+    
+    document.querySelectorAll('section, .experience-item').forEach((el, index) => {
+      if (el.classList.contains('experience-item')) {
+        el.dataset.delay = index * 100;
+      }
+      observer.observe(el);
+    });
+    
+    // Smooth Scroll for Navigation
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+  </script>
+</body>
+</html>
